@@ -1,0 +1,8 @@
+# ignore all beam files
+*.beam
+
+# ignore the test file
+/test.erl
+
+# ignore system generated files
+/.DS_Store
