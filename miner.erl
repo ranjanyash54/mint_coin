@@ -11,14 +11,14 @@ start_mining(Count, Zcount) -> % start mining
     Substring = substr(Hash, 1, Zcount),
     if
         Zerostring == Substring ->
-            master ! {Hash, Count, self()};
+            {master, 'master@127.0.0.1'} ! {Hash, Count, self()};
     true ->
         io:fwrite("")
     end,
     start_mining(Count+1, Zcount).
 
 connect_to_master() ->
-    master ! {self()},
+    {master, 'master@127.0.0.1'} ! {self()},
     receive
         { String, Zcount } -> start_mining(String, Zcount)
     end.
