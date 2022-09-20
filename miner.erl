@@ -1,6 +1,6 @@
 -module(miner).
 -import(string,[substr/3, right/3, concat/2]).
--export([start/0]).
+-export([start/1]).
 
 start_mining(Count, Zcount) -> % start mining
     Name = "shubhamagiwal92;",
@@ -17,12 +17,13 @@ start_mining(Count, Zcount) -> % start mining
     end,
     start_mining(Count+1, Zcount).
 
-connect_to_master() ->
-    {master, 'master@127.0.0.1'} ! {self()},
+connect_to_master(Ipaddress) ->
+    Masteraddress = list_to_atom(concat("master", concat("@", Ipaddress))),
+    {master, Masteraddress} ! {self()},
     receive
         { String, Zcount } -> start_mining(String, Zcount)
     end.
 
 
-start() ->
-    spawn(fun() -> connect_to_master() end).
+start(Ipaddress) ->
+    spawn(fun() -> connect_to_master(Ipaddress) end).
