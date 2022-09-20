@@ -1,20 +1,20 @@
 -module(master).
 -export([start/0]).
 
-wait_for_miner(Count, Zcount) ->
+wait_for_miner(Zcount) ->
     receive %% waiting for a miner to connect
         { Sender_id_1 }-> 
-            Sender_id_1 ! { Count, Zcount }, %% sending back the start string and number of zeros in hash
+            Sender_id_1 ! { Zcount }, %% sending back the start string and number of zeros in hash
             io:fwrite("Recived connection from ~p\n", [Sender_id_1]),
-            wait_for_miner(Count, Zcount); %% waiting for another miner
+            wait_for_miner(Zcount); %% waiting for another miner
 
-        { Coin, Newcount, Sender_id_2} ->
-            io:fwrite(" Minted ~p with count ~p from miner ~p\n", [Coin, Newcount, Sender_id_2]),
-            wait_for_miner(Newcount, Zcount)
+        { Coin, Hashstring, Sender_id_2} ->
+            io:fwrite(" Minted ~p with string ~p from miner ~p\n", [Coin, Hashstring, Sender_id_2]),
+            wait_for_miner(Zcount)
     end.
     
 
 start() ->
     {ok, Zcount} = io:read("Number of 0s to mine: "),
-    Pid = spawn(fun() -> wait_for_miner(0, Zcount) end),
+    Pid = spawn(fun() -> wait_for_miner(Zcount) end),
     register(master, Pid).
