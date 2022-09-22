@@ -3,7 +3,7 @@
 -export([start/1]).
 
 start_mining(Zcount, Masteraddress) -> % start mining
-    Name = "shubhamagiwal92;",
+    Name = "yashranjan;",
     % String = integer_to_list(Count),
     String = base64:encode_to_string(crypto:strong_rand_bytes(10)),
     Hashstring = concat(Name, String),
