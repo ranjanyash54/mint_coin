@@ -1,5 +1,6 @@
 -module(master).
 -export([start/0]).
+-export([wait_for_miner/2]).
 -import(string,[substr/3, right/3, concat/2]).
 
 wait_for_miner(_, 100) ->
@@ -19,9 +20,13 @@ wait_for_miner(Zcount, Numcoins) ->
 start() ->
     {ok, Zcount} = io:read("Number of 0s to mine: "),
     {ok, Minercount} = io:read("Number of miners to spawn "),
-    Pid = spawn(fun() -> wait_for_miner(Zcount, 0) end),
-    spawn_many(Pid, Zcount, Minercount),
-    register(master, Pid).
+    spawn_many(self(), Zcount, Minercount),
+    register(master, self()),
+    statistics(runtime),
+    {Time, _} = timer:tc(master, wait_for_miner, [Zcount, 0]),
+    {_, Time_CPU_Since_Last_Call} = statistics(runtime),
+    io:fwrite("Total clock time: ~p\nToal CPU time ~p\n CPU time/ Run Time ~p\n", [Time/1000, Time_CPU_Since_Last_Call, Time_CPU_Since_Last_Call/(Time/1000)]),
+    unregister(master).
 
 spawn_many(_, _, 0) ->
     ok;
