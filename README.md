@@ -23,19 +23,19 @@ Recived connection from <8702.93.0>
 
 ```
 
-# Project 1 
+# Project 1 : Mint_Coin Miner On Erlang
 Mint_Coin Miner on Erlang using Distributed Operating System Approach
 
 ### Implementation
 Group Members:
 
-Yash Ranjan, UFID: , 
-Piyush Singh, UFID: , 
-Source file location:
+* Yash Ranjan ; ;UFID: <br /> 
+* Piyush Singh ; piyushsingh@ufl.edu ; UFID: 5092-7342 <br /> 
+* Source file location:    <br />
 
 
 ### Usage
-cd to the project1 folder
+* cd to the project1 folder
 Run mix deps.get
 Run mix escript.build
 Ignore the warnings
@@ -65,19 +65,13 @@ When the server or client get a bitcoin, they send the value of the random strin
 Note: When the server shuts down the client will not shutdown but it will throw a bad arg exception.
 
 ## Assignment Details
-Work Unit
-The work unit we defined for each actor was 10,000,000. We specifically chose this work unit because
+1. Size of the work unit that you determined results in the best performance for your implementation and an explanation of how you determined it. The size of the work unit refers to the number of sub-problems that a worker gets in a single request from the boss.
+* Solution:
 
-a) This will avoid the possibilty of repeated generation of the same string across the workers. b) Since different workers get different workloads-> this approach can be horizontally scalabale c) Better range for doing the bitcoining operation for a given process/
-
-Result for ./project1 4
-The Result for running the ./project1 4 program on an 8-core intel core i7 is as follows
-
-### Input
-./project1 4
-
-### Output
-```
+2. The result of running your program for input 4?
+* Solution:
+ ```
+ 
 Eshell V13.0.4  (abort with ^G)
 1> c(master).
 {ok,master}
@@ -191,29 +185,45 @@ Toal CPU time 44049
  CPU time/ Run Time 2.2290424767475985
 true
 
+ ```
+ 3. The running time for the above is reported by time for the above and report the time.  The ratio of CPU time to REAL TIME tells you how many cores were effectively used in the computation.  If you are close to 1 you have almost no parallelism (points will be subtracted).
+ * Solution: For input of 4 leading Zeroes the ratio is: <br />
+Total clock time: 19761.4 <br />
+Toal CPU time 44049 <br />
+CPU time/ Run Time 2.2290424767475985 <br />
+
+4. The coin with the most 0s you managed to find.
+* Solution: 7 leading Zeroes
 ```
+Erlang/OTP 25 [erts-13.0.4] [source] [64-bit] [smp:8:8] [ds:8:8:10] [async-threads:1] [jit] [dtrace]
+
+Eshell V13.0.4  (abort with ^G)
+1> c(master).
+{ok,master}
+2> c(miner).
+{ok,miner}
+3> master:start().
+Number of 0s to mine: 7.
+Number of miners to spawn 50.
+ 1 Minted "000000045d8719f0e85cd66ebcf10e53f94abd19dc71be10361f5bc5f7ba3a04" with string "yashranjan;XgndsAHXo15kvy5eyDP0lWTiIYqG+tTFOHzawKCvaARHBAqkNdj7RVyuun1GUuvcjRhEgIwl7ir7dmdSYWtbpKf6VqI5pAFBDHQ9PG8pcHPeAtUO3JW+Q6IwXOZp5vvWoOeJEQ==" from miner <0.92.0>
+ 2 Minted "0000000e0532513a4d1e94c954d61c1cdfaa92a2db0a2513b58fa909d6d850ca" with string "yashranjan;/cp/wpY5dyLN26Ea5LE34CtiDnNu18Nxzyd7i9Uok4lf4GcJPeio8mS44uh97ocCXEjSbcp+8CGZlqiUPh61fmZ23leuagLN1Jv8Yt8iuTDGdUABwcsl7nhXvEH5GkxheJ7tog==" from miner <0.106.0>
+ 3 Minted "0000000ffb61d7f9a89b4b6c89f81f6cf1e2d663b683df7b37eca92baf384a46" with string "yashranjan;+iN3Y+97/LOMnkKQT6zPYktWbk7bbBjCb9tCjankB9YQqq19/aoH3Z78hkOQnNWAi1MtN0oDF5dRgYDHJJZR62IDt/y3kWmUfLy9sqO7U6URn/ETJYrhGcZ3GhCFu37F4XIX4A==" from miner <0.100.0>
+ 4 Minted "0000000ed61b100b5091bf081273c27a646c5b783270938de6d2eaeaaf1c453b" with string "yashranjan;5lyV1IvROtkdFqbToHE6S+JntXMGRYZ22A9TZ83Hi2o2hwh4ZjNmLJFnt6pvAC9HxAY8sW3LPSYKcijIq0y6UyeqwYLrQ2KFcUmO7L7Vynl6VonbljfuDidmZROEHIHfg4bnwA==" from miner <0.119.0>
+ 5 Minted "000000081455adba9fcf3851045a7f723eb172578a8b6377d4137dd1062b6bb9" with string "yashranjan;98KPdDefrdMW75D1Sv5gBmxW3T6EB8CqA/eQibwM8Vy8jNToFqWD6sqZ5sYiBXrJxyl39b4/1jg7cUsfUSxj6YgmRhAWg0fOgy4w9ANk/vS9qVXGCKHZJWMnSVdyjqFf1av0rA==" from miner <0.131.0>
+ 6 Minted "0000000dfd7562799a8928850606e85fc7d71cd320139c9ea52b84c03597d32f" with string "yashranjan;lYngzIsidXqhk+sxPvG5Ma71ZWl1ShFwao7UmzDhI2X4jpVS/s/GSFBbQiGZ6+chwK7c4HRp38iaCAr2ffWZyLtIfKcXxYbJ4G3WVKkbnWAsI4W2J0kUnMjBGx/redIW0stZFQ==" from miner <0.130.0>
+
+```
+5. The largest number of working machines you were able to run your code with?
+* Solution:
+ 
+ 
+ 
 
 
-### CPU Utilisation for ./project 5
-Result of running the program on an 8-core intel core i7 for ./project1 5 is
-
-### Input
-time ./project1 5
-
-### Output
 
 
-The coin with the most number of leading 0s that we able to mine
-### Input
-/project1 7
-
-### Output
 
 
-Number of Zeros : 7
-
-Largest number of working machines we tested our code on
-We connected four i-7 octa core machines locally where 1 was the server with all cores utilized at 100% and 3 miners with one process running on them and utilising only one cpu 100% as we are running only one process on the client.
 
 
 
