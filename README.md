@@ -1,27 +1,5 @@
 # mint_coin
 
-```
-erl -name master@127.0.0.1 -setcookie project1 // This is loopback address, if master and miner are running on diff
-                                               // machines, then start it on the interface ip.
-erl -name miner@127.0.0.1 -setcookie project1
-
-(master@127.0.0.1)2> c(master).
-{ok,master}
-(master@127.0.0.1)3> master:start().
-Number of 0s to mine: 4.
-
-(miner@127.0.0.1)2> miner:start("127.0.0.1").
-<0.93.0>
-
-Recived connection from <8702.93.0>
- Minted "00001b322ad8857ccac2e71fb3654a3ebc3d6c3b901983dbe20af001bc6b8dc6" with count 36675 from miner <8702.93.0>
- Minted "0000b530759801d767fd6f82d9803281730e71dda621e879c129aed84bb682ca" with count 108771 from miner <8702.93.0>
- .
- .
- 
- 
-
-```
 
 # Project 1 : Mint_Coin Miner On Erlang
 Mint_Coin Miner on Erlang using Distributed Operating System Approach
@@ -73,6 +51,10 @@ The program also outputs the CPU and Run time ratios as  mentioned in the questi
 
 Note: For every input of number of miners to spawn we delete the queue that stores the mintcoin for specific leading zeroes.
 
+
+![](images/Screen%20Shot%202022-09-24%20at%204.04.45%20PM.png)
+
+![](images/Screen%20Shot%202022-09-24%20at%204.04.59%20PM.png)
 
 
 ## Assignment Details
@@ -230,6 +212,7 @@ Number of miners to spawn 50.
 * Solution:  <br />
  The largest number of workiung machines that we were able to work on a miner and master on distributed principles are 4.
  
+ ![](images/Screen%20Shot%202022-09-24%20at%203.53.44%20PM.png)
  
 
 
