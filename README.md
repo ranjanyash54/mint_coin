@@ -9,7 +9,7 @@ Group Members:
 
 * Yash Ranjan ; yashranjan@ufl.edu ;UFID: 80764190 <br /> 
 * Piyush Singh ; piyushsingh@ufl.edu ; UFID: 5092-7342 <br /> 
-* Source file location:    <br />
+
 
 
 ### Usage
@@ -41,7 +41,7 @@ Here we have defined the number of processes to run as = No.of Cores * 4. This e
 Here we have defined the number of processes to run as one when the miner connect to the server. We can extend it to have multiple process on the same miner.
 
 ### Client(master) Server(miner) Architecture
-When we run the code as server we run No.of Cores * 4 on the server to ensure that all the cores are utilised completely to mine mintcoins based on the K values passed. Since we have a fixed workload, when a process in the server completes a given workload, it send a requests to server for the new workload. The server then allocates the new workload for this process. This mechanism repeats itself until the user manually kills the server.
+When we run the code as server we run No.of Cores 8 ^ 4 on the server to ensure that all the cores are utilised completely to mine mintcoins based on the K values passed. Since we have a fixed workload, when a process in the server completes a given workload, it send a requests to server for the new workload. The server then allocates the new workload for this process. This mechanism repeats itself until the user manually kills the server.
 
 When the client joins the server,it requests the server for ipAddress and the k value. Based on the workload and the k value, it allocates a single process for the mintcoin mining in the client.
 
@@ -210,7 +210,7 @@ Number of miners to spawn 50.
 ```
 5. The largest number of working machines you were able to run your code with?
 * Solution:  <br />
- The largest number of workiung machines that we were able to work on a miner and master on distributed principles are 4.
+ The largest number of working machines that we were able to work on a miner and master on distributed principles are 4.
  
  ![](images/Screen%20Shot%202022-09-24%20at%203.53.44%20PM.png)
  
