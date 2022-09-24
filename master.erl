@@ -26,7 +26,9 @@ start() ->
     {Time, _} = timer:tc(master, wait_for_miner, [Zcount, 0]),
     {_, Time_CPU_Since_Last_Call} = statistics(runtime),
     io:fwrite("Total clock time: ~p\nToal CPU time ~p\n CPU time/ Run Time ~p\n", [Time/1000, Time_CPU_Since_Last_Call, Time_CPU_Since_Last_Call/(Time/1000)]),
-    unregister(master).
+    unregister(master),
+    exit(self(),ok).
+    
 
 spawn_many(_, _, 0) ->
     ok;
