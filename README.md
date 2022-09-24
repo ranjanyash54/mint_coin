@@ -29,40 +29,51 @@ Mint_Coin Miner on Erlang using Distributed Operating System Approach
 ### Implementation
 Group Members:
 
-* Yash Ranjan ; ;UFID: <br /> 
+* Yash Ranjan ; yashranjan@ufl.edu ;UFID: 80764190 <br /> 
 * Piyush Singh ; piyushsingh@ufl.edu ; UFID: 5092-7342 <br /> 
 * Source file location:    <br />
 
 
 ### Usage
-* cd to the project1 folder
-Run mix deps.get
-Run mix escript.build
-Ignore the warnings
-Run ./project1 [k | ip_addr]
-Implementation Details
-For local implementation follow the Usage guidelines above.
-./project1 [k | ip_addr]
-where k=number of leading zeros for the generated bitcoins required
-ip_addr= IP Address of the server you want to connect to, in this case the local machine acts aa a miner
+
+1. Commands to run the program
+* To run Server(master.erl) instance: ‘erl -name {serverName}@{ipAddress} -setcookie {cookieName}’ <br /> 
+* e.g.: ‘erl -name master@127.0.0.1 -setcookie project1’ <br /> 
+* Compile master.erl using c(master). <br /> 
+* Compile miner.erl using c(miner). <br /> 
+* once you have entered the erl shell, to start the server: ‘server:start().’ <br /> 
+* Next ‘Enter number of 0s to mine for mintcoin : ’ <br /> 
+* Next ‘Enter number of miners to spawn : ’ <br /> 
+* master(server) can mine coins without any active miner(client) nodes <br /> 
+
+
+2. Distributed Implementation of the Project: 
+* Start the server using the above steps, then create worker nodes. <br />
+* To create Worker(miner.erl) node: ‘erl -name {minerName}@{ipAddress} -setcookie {cookieName}’ <br />
+* e.g.: ‘erl -name miner@127.0.0.1 -setcookie project1’ <br />
+* Once you have entered the erl shell, to start the miner(client): ‘miner:start(“{ip_address_of_master}”).’ <br />
 
 ### Work Unit Generation
-The string generation in our project for bitcoin mining is an iterative approach where we are generating a workload of 10,000,000 for each process on the machine. Each process will be provided a start number and workload. The process will then mine for the bitcoin between start number and the workload.
+The string generation in our project for mintcoin(BITCOIN) mining is an iterative approach where we are generating a workload of infinitely many strings for each process on the machine. Each process will be provided a start number and then it will start generating strings consecutively until 100 such mintcoins are mined. The process will then return the cpu and run time ratios to check the parallelism of the program.
 
-### Server work unit metrics
-Here we have defined the number of processes to run as = No.of Cores * 4. This ensures that all the cores are used efficiently to mine bitcoins in a faster manner.
+### Server(master) work unit metrics
+Here we have defined the number of processes to run as = No.of Cores * 4. This ensures that all the cores are used efficiently to mine mintcoins in a faster manner.
 
-### Miner work unit metrics
+### Client(miner) work unit metrics
 Here we have defined the number of processes to run as one when the miner connect to the server. We can extend it to have multiple process on the same miner.
 
-### Client Server Architecture
-When we run the code as server we run No.of Cores * 4 on the server to ensure that all the cores are utilised completely to mine bitcoins based on the k values passed. Since we have a fixed workload, when a process in the server completes a given workload, it send a requests to server for the new workload. The server then allocates the new workload for this process. This mechanism repeats itself until the user manually kills the server.
+### Client(master) Server(miner) Architecture
+When we run the code as server we run No.of Cores * 4 on the server to ensure that all the cores are utilised completely to mine mintcoins based on the K values passed. Since we have a fixed workload, when a process in the server completes a given workload, it send a requests to server for the new workload. The server then allocates the new workload for this process. This mechanism repeats itself until the user manually kills the server.
 
-When the client joins the server,it requests the server for the workload and the k value. Based on the workload and the k value, it allocates a single process for the bitcoin mining in the client.
+When the client joins the server,it requests the server for ipAddress and the k value. Based on the workload and the k value, it allocates a single process for the mintcoin mining in the client.
 
-When the server or client get a bitcoin, they send the value of the random string and its hash value back to the server to be printed on the console.
+When the master or miner get a mintcoin, they send the value of the random string and its hash value back to the master to be printed on the console.
+The master and the miners spawned mine the desired amount of coins which is 100 parallely and onece the achieve the amount it prints the the hash values and the strings.
+The program also outputs the CPU and Run time ratios as  mentioned in the question. <br />
 
-Note: When the server shuts down the client will not shutdown but it will throw a bad arg exception.
+Note: For every input of number of miners to spawn we delete the queue that stores the mintcoin for specific leading zeroes.
+
+
 
 ## Assignment Details
 1. Size of the work unit that you determined results in the best performance for your implementation and an explanation of how you determined it. The size of the work unit refers to the number of sub-problems that a worker gets in a single request from the boss.
@@ -188,9 +199,11 @@ true
  ```
  3. The running time for the above is reported by time for the above and report the time.  The ratio of CPU time to REAL TIME tells you how many cores were effectively used in the computation.  If you are close to 1 you have almost no parallelism (points will be subtracted).
  * Solution: For input of 4 leading Zeroes the ratio is: <br />
+```
 Total clock time: 19761.4 <br />
 Toal CPU time 44049 <br />
 CPU time/ Run Time 2.2290424767475985 <br />
+```
 
 4. The coin with the most 0s you managed to find.
 * Solution: 7 leading Zeroes
@@ -214,8 +227,8 @@ Number of miners to spawn 50.
 
 ```
 5. The largest number of working machines you were able to run your code with?
-* Solution:
- 
+* Solution:  <br />
+ The largest number of workiung machines that we were able to work on a miner and master on distributed principles are 4.
  
  
 
