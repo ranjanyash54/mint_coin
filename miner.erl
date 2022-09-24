@@ -4,7 +4,6 @@
 
 start_mining(Zcount, Masteraddress) -> % start mining
     Name = "yashranjan;",
-    % String = integer_to_list(Count),
     String = base64:encode_to_string(crypto:strong_rand_bytes(10)),
     Hashstring = concat(Name, String),
     Hash = io_lib:format("~64.16.0b", [binary:decode_unsigned(crypto:hash(sha256, Hashstring))]),
@@ -20,11 +19,11 @@ start_mining(Zcount, Masteraddress) -> % start mining
     end,
     start_mining(Zcount, Masteraddress).
 
-connect_to_master(Ipaddress) ->
+connect_to_master(Ipaddress) ->%checking the master IPAddress 
     Masteraddress = list_to_atom(concat("master", concat("@", Ipaddress))),
     {master, Masteraddress} ! {self()},
     receive
-        { Zcount } -> start_mining(Zcount, Masteraddress)
+        { Zcount } -> start_mining(Zcount, Masteraddress)%Calling the miner to start mining.
     end.
 
 
