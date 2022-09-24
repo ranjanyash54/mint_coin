@@ -9,7 +9,7 @@ wait_for_miner(Zcount, Numcoins) ->
     receive %% waiting for a miner to connect
         { Sender_id_1 }-> 
             Sender_id_1 ! { Zcount }, %% sending back the start string and number of zeros in hash
-            io:fwrite("Recived connection from ~p\n", [Sender_id_1]),
+            io:fwrite("Received connection from ~p\n", [Sender_id_1]),
             wait_for_miner(Zcount, Numcoins); %% waiting for another miner
 
         { Coin, Hashstring, Sender_id_2} ->
@@ -23,33 +23,33 @@ start() ->
     spawn_many(self(), Zcount, Minercount),
     register(master, self()),
     statistics(runtime),
-    {Time, _} = timer:tc(master, wait_for_miner, [Zcount, 0]),
+    {Time, _} = timer:tc(master, wait_for_miner, [Zcount, 0]),%Calculating the runtime and cpu time
     {_, Time_CPU_Since_Last_Call} = statistics(runtime),
     io:fwrite("Total clock time: ~p\nToal CPU time ~p\n CPU time/ Run Time ~p\n", [Time/1000, Time_CPU_Since_Last_Call, Time_CPU_Since_Last_Call/(Time/1000)]),
-    unregister(master),
+    unregister(master),%Deleteing the queue to take successive inputs once the program ran its course.
     exit(self(),ok).
     
 
-spawn_many(_, _, 0) ->
+spawn_many(_, _, 0) ->%spawing multiple miners as inputed for mining mintcoins
     ok;
 spawn_many(Pid, Zcount, Minercount) ->
     spawn(fun() -> start_mining(Pid, Zcount) end),
     spawn_many(Pid, Zcount, Minercount-1).
 
-start_mining(Pid, Zcount) -> % start mining
+start_mining(Pid, Zcount) -> % start mining 
     Name = "yashranjan;",
-    % String = integer_to_list(Count),
+    % Master mining functionality 
     String = base64:encode_to_string(crypto:strong_rand_bytes(100)),
     Hashstring = concat(Name, String),
-    Hash = io_lib:format("~64.16.0b", [binary:decode_unsigned(crypto:hash(sha256, Hashstring))]),
+    Hash = io_lib:format("~64.16.0b", [binary:decode_unsigned(crypto:hash(sha256, Hashstring))]),%Generating the string using hash function
     Zerostring = right("", Zcount, $0),
     Maxzerostring = right("", Zcount+1, $0),
     Substring = substr(Hash, 1, Zcount),
     Maxsubstring = substr(Hash, 1, Zcount+1),
     if
-        (Zerostring == Substring) and (Maxzerostring =/= Maxsubstring)->
+        (Zerostring == Substring) and (Maxzerostring =/= Maxsubstring)->%comparing the string generated with the edge cases
             Pid ! {Hash, Hashstring, self()};
-        % io:fwrite(" Minted ~p with string ~p from server \n", [Hash, Hashstring]);
+        % 
     true ->
         ok
     end,
